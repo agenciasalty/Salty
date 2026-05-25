@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano Estratégico — Comunidade Sophia Martins × YN Variedades</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0908;
+    --bg2: #110F0C;
+    --card: #1A1714;
+    --card-hover: #211D17;
+    --gold: #C9A96E;
+    --gold-light: #E8D5A8;
+    --gold-dark: #8B7340;
+    --gold-glow: rgba(201,169,110,0.12);
+    --text: #F5F0E8;
+    --text-muted: #A09882;
+    --border: #2A2520;
+    --success: #7BA37F;
+    --warning: #D4956E;
+    --info: #7EA8C9;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    padding: 48px 20px 40px;
+    position: relative;
+    animation: fadeDown 0.8s ease;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .header .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 400;
+    color: var(--gold-light);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ─── TABS ─── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 5px;
+    margin-bottom: 28px;
+    position: sticky;
+    top: 8px;
+    z-index: 100;
+    border: 1px solid var(--border);
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 11px 6px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); background: rgba(201,169,110,0.06); }
+  .tab-btn.active {
+    color: var(--bg);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(201,169,110,0.25);
+  }
+
+  /* ─── SECTIONS ─── */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.5s ease; }
+
+  /* ─── STAT GRID ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .stat-card:hover { border-color: var(--gold-dark); }
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+  .stat-sub { font-size: 10px; color: var(--gold-dark); margin-top: 2px; }
+
+  /* ─── THESIS BOX ─── */
+  .thesis {
+    background: linear-gradient(135deg, var(--card), #1F1B15);
+    border: 1px solid var(--gold-dark);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .thesis::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .thesis-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .thesis p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .thesis strong { color: var(--gold-light); }
+
+  /* ─── WARN BOX ─── */
+  .warn-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warning);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .warn-box .warn-title { font-size: 13px; font-weight: 700; color: var(--warning); margin-bottom: 10px; }
+  .warn-box p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ─── PRODUCT CARDS ─── */
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 14px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .product-card:hover { border-color: var(--gold-dark); transform: translateY(-1px); }
+  .pc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .pc-icon { font-size: 32px; line-height: 1; }
+  .pc-info { flex: 1; }
+  .pc-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .pc-ticket { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .badge {
+    display: inline-block;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--bg);
+    background: var(--gold);
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .badge.green { background: var(--success); }
+  .badge.orange { background: var(--warning); }
+  .badge.blue { background: var(--info); }
+
+  /* Progress */
+  .progress-track {
+    width: 100%;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+  .pc-why { font-size: 13px; line-height: 1.65; color: var(--text); margin-bottom: 14px; }
+  .pc-products-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .pc-product-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pc-product-item:last-child { border-bottom: none; }
+
+  /* ─── STRATEGY CARDS ─── */
+  .strat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 14px;
+    transition: border-color 0.3s;
+  }
+  .strat-card:hover { border-color: var(--gold-dark); }
+  .strat-icon { font-size: 28px; margin-bottom: 8px; }
+  .strat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+  .strat-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+  .strat-actions {
+    background: var(--bg2);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .strat-actions-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .strat-action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .strat-action-item .diamond { color: var(--gold); flex-shrink: 0; margin-top: 2px; font-size: 8px; }
+
+  /* ─── CALENDAR ─── */
+  .cal-intro {
+    background: linear-gradient(135deg, var(--card), #1F1B15);
+    border: 1px solid var(--gold-dark);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .cal-intro-title { font-size: 14px; font-weight: 700; color: var(--gold); }
+  .cal-intro-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .week-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 14px;
+  }
+  .week-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .week-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .week-theme { font-size: 11px; color: var(--gold-dark); margin-top: 2px; }
+  .week-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bg);
+    flex-shrink: 0;
+  }
+  .week-action {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .week-action:last-child { border-bottom: none; }
+  .week-action-text { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+  /* META */
+  .meta-box {
+    background: var(--card);
+    border: 1px solid var(--gold-dark);
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 18px;
+    text-align: center;
+  }
+  .meta-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 14px; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .meta-label { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .meta-note { font-size: 11px; color: var(--text-muted); margin-top: 14px; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+  }
+  .footer p {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-item {
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .fade-item:nth-child(1) { animation-delay: 0.05s; }
+  .fade-item:nth-child(2) { animation-delay: 0.1s; }
+  .fade-item:nth-child(3) { animation-delay: 0.15s; }
+  .fade-item:nth-child(4) { animation-delay: 0.2s; }
+  .fade-item:nth-child(5) { animation-delay: 0.25s; }
+  .fade-item:nth-child(6) { animation-delay: 0.3s; }
+  .fade-item:nth-child(7) { animation-delay: 0.35s; }
+  .fade-item:nth-child(8) { animation-delay: 0.4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 500px) {
+    .container { padding: 16px 12px 40px; }
+    .header { padding: 32px 12px 28px; }
+    .tab-btn { font-size: 11px; padding: 10px 4px; }
+    .stat-value { font-size: 22px; }
+    .pc-name { font-size: 15px; }
+    .strat-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="eyebrow">Estratégia de Penetração Comercial</div>
+    <h1>Comunidade <em>Sophia Martins</em></h1>
+    <p class="subtitle">7.900 mulheres empreendedoras • Catálogo YN Variedades • 9.403 produtos analisados</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('resumo')">Visão Geral</button>
+    <button class="tab-btn" onclick="switchTab('produtos')">Top Produtos</button>
+    <button class="tab-btn" onclick="switchTab('estrategia')">Estratégia</button>
+    <button class="tab-btn" onclick="switchTab('calendario')">Calendário</button>
+  </div>
+
+  <!-- ════════════════ VISÃO GERAL ════════════════ -->
+  <div id="resumo" class="section active">
+
+    <div class="stat-grid">
+      <div class="stat-card fade-item">
+        <div class="stat-value">9.403</div>
+        <div class="stat-label">Produtos Analisados</div>
+        <div class="stat-sub">56 categorias no catálogo</div>
+      </div>
+      <div class="stat-card fade-item">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Categorias Selecionadas</div>
+        <div class="stat-sub">curadoria para público feminino</div>
+      </div>
+      <div class="stat-card fade-item">
+        <div class="stat-value">7.900</div>
+        <div class="stat-label">Assinantes</div>
+        <div class="stat-sub">comunidade 100% feminina</div>
+      </div>
+      <div class="stat-card fade-item">
+        <div class="stat-value">R$30–150</div>
+        <div class="stat-label">Ticket Ideal</div>
+        <div class="stat-sub">faixa de compra por impulso</div>
+      </div>
+    </div>
+
+    <div class="thesis fade-item">
+      <div class="thesis-title">💡 Tese Central</div>
+      <p>A comunidade da Sophia Martins reúne <strong>mulheres ambiciosas, de 28 a 42 anos, classes A/B</strong>, focadas em carreira, posicionamento e estilo de vida. Elas não compram "coisas" — compram <strong>ferramentas de transformação</strong>. Cada produto precisa ser apresentado como parte da rotina de uma mulher que faz acontecer: o copo térmico que vai para a reunião, a chapinha antes do plantão, o organizador do escritório que gera produtividade.</p>
+    </div>
+
+    <div class="warn-box fade-item">
+      <div class="warn-title">⚠️ Categorias para NÃO divulgar nessa comunidade</div>
+      <p>Bicicletas e acessórios, artigos de mergulho, chaves e ferramentas, controles de TV, cabos e adaptadores técnicos, videogames, motinhas/patinetes, baofeng/binóculos, cases/cooler de PC. Esses produtos não conversam com a persona feminina da comunidade e diluem o posicionamento.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════ TOP PRODUTOS ════════════════ -->
+  <div id="produtos" class="section">
+
+    <!-- 1 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">💇‍♀️</span>
+        <div class="pc-info">
+          <div class="pc-name">#1 Máquinas e Modeladores de Cabelo</div>
+          <div class="pc-ticket">Faixa: R$9 – R$290</div>
+        </div>
+        <span class="badge">98%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:98%"></div></div>
+      <div class="pc-why">Altíssima demanda feminina. Produto visual, fácil de demonstrar em vídeo. Margem boa no ML. A audiência da Sophia valoriza aparência e cuidado pessoal como parte do posicionamento profissional.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Chapinhas e pranchas (R$9 – R$220)</div>
+      <div class="pc-product-item">→ Modeladores de cachos (R$55 – R$65)</div>
+      <div class="pc-product-item">→ Escovas alisadoras (R$80 – R$230)</div>
+      <div class="pc-product-item">→ Secadores profissionais (R$90 – R$290)</div>
+    </div>
+
+    <!-- 2 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">🥤</span>
+        <div class="pc-info">
+          <div class="pc-name">#2 Copos Térmicos (estilo Stanley)</div>
+          <div class="pc-ticket">Faixa: R$12 – R$98</div>
+        </div>
+        <span class="badge">96%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:96%"></div></div>
+      <div class="pc-why">Febre entre mulheres. Visual "instagramável". Preço acessível = compra por impulso. Pode ser posicionado como acessório de estilo de vida da mulher empreendedora. Volume altíssimo no Mercado Livre.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Copos térmicos 360–600ml (R$12 – R$48)</div>
+      <div class="pc-product-item">→ Garrafas térmicas 1L (R$25 – R$45)</div>
+      <div class="pc-product-item">→ Kits jarra + xícaras (R$68 – R$98)</div>
+    </div>
+
+    <!-- 3 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">🌸</span>
+        <div class="pc-info">
+          <div class="pc-name">#3 Perfumes</div>
+          <div class="pc-ticket">Faixa: R$16 – R$200</div>
+        </div>
+        <span class="badge">95%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:95%"></div></div>
+      <div class="pc-why">Produto emocional e aspiracional. Perfumes árabes estão em alta no Brasil. Público feminino A/B compra por indicação — encaixe perfeito com a comunidade. Compra recorrente e fidelizável.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Body Splash 200ml (R$16)</div>
+      <div class="pc-product-item">→ Perfumes 30ml (R$22 – R$35)</div>
+      <div class="pc-product-item">→ Perfumes árabes premium 100ml (R$140 – R$200)</div>
+    </div>
+
+    <!-- 4 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">🏠</span>
+        <div class="pc-info">
+          <div class="pc-name">#4 Artigos de Organização</div>
+          <div class="pc-ticket">Faixa: R$6 – R$85</div>
+        </div>
+        <span class="badge">90%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+      <div class="pc-why">Mulher empreendedora = casa organizada. Conteúdo de "antes e depois" gera engajamento absurdo. Temas como produtividade e organização são core do posicionamento da Sophia.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Organizadores de maquiagem (R$22 – R$60)</div>
+      <div class="pc-product-item">→ Porta-joias (R$6 – R$16)</div>
+      <div class="pc-product-item">→ Caixas organizadoras (R$11 – R$45)</div>
+      <div class="pc-product-item">→ Sapateiras (R$18 – R$85)</div>
+    </div>
+
+    <!-- 5 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">🍳</span>
+        <div class="pc-info">
+          <div class="pc-name">#5 Cozinha Premium</div>
+          <div class="pc-ticket">Faixa: R$33 – R$650</div>
+        </div>
+        <span class="badge">88%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:88%"></div></div>
+      <div class="pc-why">Eletrodomésticos vendem muito bem para mulheres no ML. Air Fryer segue em alta. Jogos de panelas e utensílios "bonitos" viralizam no Instagram feminino. Ticket médio alto = margem maior.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Air Fryer 3,7L–8L (R$230 – R$550)</div>
+      <div class="pc-product-item">→ Jogos de panelas (R$140 – R$650)</div>
+      <div class="pc-product-item">→ Kit xícaras com suporte (R$46 – R$100)</div>
+      <div class="pc-product-item">→ Jogos de talheres premium (R$33 – R$135)</div>
+    </div>
+
+    <!-- 6 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">📸</span>
+        <div class="pc-info">
+          <div class="pc-name">#6 Ring Light e Tripés</div>
+          <div class="pc-ticket">Faixa: R$8 – R$340</div>
+        </div>
+        <span class="badge">87%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:87%"></div></div>
+      <div class="pc-why">Público da Sophia = mulheres que trabalham com imagem, vendas e redes sociais. Ferramenta de trabalho para quem cria conteúdo ou faz videochamadas. Venda consultiva possível.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Ring Light 6–18 polegadas (R$15 – R$340)</div>
+      <div class="pc-product-item">→ Tripés e bastões selfie (R$8 – R$365)</div>
+    </div>
+
+    <!-- 7 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">🌿</span>
+        <div class="pc-info">
+          <div class="pc-name">#7 Umidificadores e Aromatizadores</div>
+          <div class="pc-ticket">Faixa: R$8 – R$50</div>
+        </div>
+        <span class="badge">85%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:85%"></div></div>
+      <div class="pc-why">Produto de bem-estar, tendência forte. Visual bonito para conteúdo. Preço acessível = entrada fácil. Combina com narrativa de autocuidado e ambiente de trabalho agradável.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Umidificadores com LED (R$15 – R$50)</div>
+      <div class="pc-product-item">→ Difusores de aroma (R$50)</div>
+      <div class="pc-product-item">→ Sprays faciais (R$8)</div>
+    </div>
+
+    <!-- 8 -->
+    <div class="product-card fade-item">
+      <div class="pc-header">
+        <span class="pc-icon">👜</span>
+        <div class="pc-info">
+          <div class="pc-name">#8 Bolsas e Mochilas</div>
+          <div class="pc-ticket">Faixa: R$5 – R$175</div>
+        </div>
+        <span class="badge">82%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:82%"></div></div>
+      <div class="pc-why">Acessório essencial. Mochilas executivas e bolsas de trabalho encaixam no perfil de mulheres profissionais. Variedade de faixa de preço permite montar kits.</div>
+      <div class="pc-products-label">Produtos em destaque:</div>
+      <div class="pc-product-item">→ Bolsas femininas (R$18 – R$55)</div>
+      <div class="pc-product-item">→ Mochilas femininas (R$43 – R$175)</div>
+      <div class="pc-product-item">→ Pochetes (R$7 – R$9)</div>
+      <div class="pc-product-item">→ Bolsas térmicas (R$5 – R$43)</div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════ ESTRATÉGIA ════════════════ -->
+  <div id="estrategia" class="section">
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">💎</div>
+      <div class="strat-title">1. Clube de Ofertas Exclusivas</div>
+      <div class="strat-desc">Crie um canal exclusivo dentro da comunidade com ofertas que só as assinantes acessam. Cupom de desconto próprio ou link rastreável do Mercado Livre.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Ações práticas</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Código de desconto exclusivo (ex: SOPHIA10)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Ofertas relâmpago semanais só para a comunidade</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Antecipação de lançamentos e promoções</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Link de afiliada para rastrear conversão</div>
+      </div>
+    </div>
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">🎬</div>
+      <div class="strat-title">2. Conteúdo "Rotina de Mulher que Faz Acontecer"</div>
+      <div class="strat-desc">Produza conteúdo que mostre os produtos inseridos na rotina de uma mulher de negócios. Não é propaganda — é estilo de vida.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Ações práticas</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Vídeo: "Meu escritório organizado" (organizadores + ring light)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Post: "Meu kit de reunião" (copo térmico + bolsa + perfume)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Story: Unboxing com reações reais</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Carrossel: "Transformação do meu espaço" (antes/depois)</div>
+      </div>
+    </div>
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">🔴</div>
+      <div class="strat-title">3. Lives de Demonstração na Comunidade</div>
+      <div class="strat-desc">Lives semanais mostrando produtos em uso real, com link direto no ML. Formato de "achados" funciona muito bem com público feminino.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Ações práticas</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Lives quinzenais: "Achados da semana" (3–5 produtos)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Enquetes antes da live: o que elas querem ver?</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Sorteio para quem comprar durante a live</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Depoimentos reais de quem já comprou</div>
+      </div>
+    </div>
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">🎁</div>
+      <div class="strat-title">4. Kits Temáticos no Mercado Livre</div>
+      <div class="strat-desc">Monte kits combinados que aumentem o ticket médio e sejam irresistíveis para o público.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Sugestões de kits</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Kit Autocuidado: chapinha + perfume + espelho (R$80–R$150)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Kit Home Office: ring light + copo térmico + organizador (R$60–R$120)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Kit Presente: perfume + porta-joias + bolsa (R$50–R$100)</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Kit Cozinha: air fryer forma + kit utensílios (R$250–R$400)</div>
+      </div>
+    </div>
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">🤝</div>
+      <div class="strat-title">5. Programa de Indicação entre Mulheres</div>
+      <div class="strat-desc">Mulheres confiam em indicação de outras mulheres. Crie um sistema onde quem indica ganha benefício.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Ações práticas</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Indicou e a amiga comprou? Ganha desconto na próxima</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Top 5 indicadoras do mês ganham um produto</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Depoimentos com foto = destaque na comunidade</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Ranking mensal de "embaixadoras" da loja</div>
+      </div>
+    </div>
+
+    <div class="strat-card fade-item">
+      <div class="strat-icon">👑</div>
+      <div class="strat-title">6. Posicionamento como "A Loja da Comunidade"</div>
+      <div class="strat-desc">Não seja apenas uma patrocinadora — seja a loja oficial da comunidade. Crie identidade visual e narrativa própria.</div>
+      <div class="strat-actions">
+        <div class="strat-actions-label">Ações práticas</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Nome: "Curadoria [SeuNome] × Sophia Martins"</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Selo nos anúncios: "Aprovado pela Comunidade"</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Coluna fixa na comunidade: "Achados da Semana"</div>
+        <div class="strat-action-item"><span class="diamond">◆</span> Presença em todos os eventos e marcos (lançamentos, seminários)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════ CALENDÁRIO ════════════════ -->
+  <div id="calendario" class="section">
+
+    <div class="cal-intro fade-item">
+      <div class="cal-intro-title">🗓️ Plano de Ação — Primeiro Mês</div>
+      <div class="cal-intro-sub">Da entrada na comunidade até o sistema rodando no automático</div>
+    </div>
+
+    <div class="week-card fade-item">
+      <div class="week-header">
+        <div>
+          <div class="week-name">Semana 1</div>
+          <div class="week-theme">Lançamento e Impacto</div>
+        </div>
+        <div class="week-number">1</div>
+      </div>
+      <div class="week-action">
+        <span class="badge">Comunidade</span>
+        <div class="week-action-text">Post de apresentação como patrocinadora com oferta de boas-vindas</div>
+      </div>
+      <div class="week-action">
+        <span class="badge green">ML</span>
+        <div class="week-action-text">Publicar os 10 produtos-chave com títulos otimizados para público feminino</div>
+      </div>
+      <div class="week-action">
+        <span class="badge orange">Conteúdo</span>
+        <div class="week-action-text">Vídeo unboxing dos 3 produtos mais visuais (chapinha, copo, perfume)</div>
+      </div>
+    </div>
+
+    <div class="week-card fade-item">
+      <div class="week-header">
+        <div>
+          <div class="week-name">Semana 2</div>
+          <div class="week-theme">Engajamento e Prova Social</div>
+        </div>
+        <div class="week-number">2</div>
+      </div>
+      <div class="week-action">
+        <span class="badge">Comunidade</span>
+        <div class="week-action-text">Enquete: "Qual produto vocês querem ver em detalhe?"</div>
+      </div>
+      <div class="week-action">
+        <span class="badge green">ML</span>
+        <div class="week-action-text">Montar primeiro Kit Temático (Kit Autocuidado)</div>
+      </div>
+      <div class="week-action">
+        <span class="badge orange">Conteúdo</span>
+        <div class="week-action-text">Post carrossel: "Transformação do escritório com menos de R$100"</div>
+      </div>
+    </div>
+
+    <div class="week-card fade-item">
+      <div class="week-header">
+        <div>
+          <div class="week-name">Semana 3</div>
+          <div class="week-theme">Live de Vendas</div>
+        </div>
+        <div class="week-number">3</div>
+      </div>
+      <div class="week-action">
+        <span class="badge">Comunidade</span>
+        <div class="week-action-text">Primeira live "Achados da Semana" com 5 produtos + cupom exclusivo</div>
+      </div>
+      <div class="week-action">
+        <span class="badge green">ML</span>
+        <div class="week-action-text">Ativar cupom rastreável para medir conversão da comunidade</div>
+      </div>
+      <div class="week-action">
+        <span class="badge orange">Conteúdo</span>
+        <div class="week-action-text">Repostar stories e depoimentos de quem comprou</div>
+      </div>
+    </div>
+
+    <div class="week-card fade-item">
+      <div class="week-header">
+        <div>
+          <div class="week-name">Semana 4</div>
+          <div class="week-theme">Escala e Indicação</div>
+        </div>
+        <div class="week-number">4</div>
+      </div>
+      <div class="week-action">
+        <span class="badge">Comunidade</span>
+        <div class="week-action-text">Lançar Programa de Indicação + sorteio do mês</div>
+      </div>
+      <div class="week-action">
+        <span class="badge green">ML</span>
+        <div class="week-action-text">Publicar Kit Home Office e Kit Presente</div>
+      </div>
+      <div class="week-action">
+        <span class="badge orange">Conteúdo</span>
+        <div class="week-action-text">Post: "Top 5 mais vendidos do mês pela comunidade"</div>
+      </div>
+    </div>
+
+    <!-- META -->
+    <div class="meta-box fade-item">
+      <div class="meta-title">🎯 Meta do Primeiro Mês</div>
+      <div class="meta-grid">
+        <div>
+          <div class="meta-val">150+</div>
+          <div class="meta-label">Vendas</div>
+        </div>
+        <div>
+          <div class="meta-val">R$45</div>
+          <div class="meta-label">Ticket Médio</div>
+        </div>
+        <div>
+          <div class="meta-val">500+</div>
+          <div class="meta-label">Cliques ML</div>
+        </div>
+      </div>
+      <div class="meta-note">Conversão esperada: 2–3% da base (150–230 vendas/mês)</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Análise Estratégica • YN Variedades × Comunidade Sophia Martins</p>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  document.getElementById(id).classList.add('active');
+  
+  const btns = document.querySelectorAll('.tab-btn');
+  const tabs = ['resumo','produtos','estrategia','calendario'];
+  const idx = tabs.indexOf(id);
+  if (idx >= 0) btns[idx].classList.add('active');
+
+  // Re-trigger animations
+  document.getElementById(id).querySelectorAll('.fade-item').forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
